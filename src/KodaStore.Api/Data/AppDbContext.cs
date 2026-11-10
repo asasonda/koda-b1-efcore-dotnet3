@@ -65,6 +65,32 @@ public sealed class AppDbContext : DbContext
             entity.HasIndex(p => p.OrderDate);
         });
 
-        modelBuilder.Entity<OrderItem>(entity =>)
+        modelBuilder.Entity<OrderItem>(entity =>
+        {
+            entity.ToTable("OrderItem", "dbo", table =>
+            {
+                table.HasCheckConstraint("CK_OrderItem_Quantity", "[Quantity] > 0");
+                table.HasCheckConstraint("CK_OrderItem_UnitPrice", "[UnitPrice] >= 0");
+            });
+            entity.HasKey(i => i.Id);
+            entity.Property(i => i.Id).ValueGeneratedOnAdd();
+            entity.Property(i => i.ProductCode).HasMaxLength(30).IsRequired();
+            entity.Property(i => i.Quantity).IsRequired();
+            entity.Property(i => i.UnitPrice).HasPrecision(18, 2).IsRequired();
+            entity.Property(i => i.SubTotal).HasComputedColumnSql("[Quantity] * [UnitPrice]", stored: true);
+
+            entity.HasOne(i => i.Order)
+                .WithMany(o => o.Items)
+                .HasForeignKey(i => i.OrderId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasOne(i => i.Products)
+                .WithMany(p => p.items)
+                .HasForeignKey(i => i.ProductCode)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasIndex(i => new { i.Id, i.ProductCode }).IsUnique();
+            entity.HasIndex(i => i.ProductCode);
+        });
     }
 }
