@@ -11,6 +11,8 @@ public sealed class AppDbContext : DbContext
     }
 
     public DbSet<Products> Products => Set<Products>();
+    public DbSet<Order> Orders => Set<Order>();
+    public DbSet<OrderItem> OrderItems => Set<OrderItem>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -42,5 +44,27 @@ public sealed class AppDbContext : DbContext
                 .HasMaxLength(30)
                 .IsRequired();
         });
+
+        modelBuilder.Entity<Order>(entity =>
+        {
+            entity.ToTable("Order", "dbo", table =>
+            {
+                table.HasCheckConstraint("CK_Orders_Status", "[Status] in ('Pending', 'Confirmed')");
+            });
+
+            entity.HasKey(p => p.Id);
+
+            entity.Property(p => p.Id).ValueGeneratedOnAdd();
+
+            entity.Property(p => p.OrderNumber).HasMaxLength(35).IsRequired();
+
+            entity.Property(p => p.OrderDate).HasColumnType("datetimeoffset").IsRequired();
+
+            entity.Property(p => p.Status).HasMaxLength(20).IsRequired();
+
+            entity.HasIndex(p => p.OrderDate);
+        });
+
+        modelBuilder.Entity<OrderItem>(entity =>)
     }
 }

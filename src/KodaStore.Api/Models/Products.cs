@@ -7,6 +7,8 @@ public sealed class Products
     public decimal Price {get; private set;}
     public int Stock {get; private set;}
     public string Category {get; private set;}
+    public bool IsActive {get; private set;}
+    public ICollection<OrderItem> items {get; private set;} = [];
 
     public Products(string productCode, string name, decimal price, int stock, string category)
     {
@@ -37,6 +39,13 @@ public sealed class Products
         Stock = stock;
         Category = category.Trim();
     }
+
+    public void Activate(string name, decimal price, int stock, string category, bool isActive)
+    {
+        
+    }
+
+
 
     public void UpdateDetail(string name, decimal price, int stock, string category)
     {
