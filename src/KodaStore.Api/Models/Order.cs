@@ -35,6 +35,8 @@ public sealed class Order
         {
             throw new ArgumentException("Order tidak dapat diubah");
         }
-        if(Items.Any(i => i.))
+        if(Items.Any(i => i.ProductCode == products.ProductCode)) throw new ArgumentException("product order tidak boleh berulang dalam satu order");
+
+        Items.Add(new OrderItem(products, quantity));
     }
 }

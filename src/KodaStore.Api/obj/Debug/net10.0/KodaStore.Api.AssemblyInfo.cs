@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("KodaStore.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+57154cffdbd1705a280a3d67601d94c0f31e5bad")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fbbe79033a87aaf8d339296b4a5c63aa2a965bcf")]
 [assembly: System.Reflection.AssemblyProductAttribute("KodaStore.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("KodaStore.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
